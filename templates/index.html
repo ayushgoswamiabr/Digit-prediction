@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #paint {
+        border: 3px solid #000;
+        width: 500px;
+        height: 500px;
+      }
+      #predicted {
+        font-size: 36px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <div id="paint">
+      <canvas id="myCanvas"></canvas>
+    </div>
+    <button onclick="{predict()}">Submit</button>
+    <button onclick="{clear()}">clear</button>
+    <span id="predicted">Predicted number: <span id="number"></span></span>
+    <script>
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+
+      var painting = document.getElementById("paint");
+      var paint_style = getComputedStyle(painting);
+      canvas.width = parseInt(paint_style.getPropertyValue("width"));
+      canvas.height = parseInt(paint_style.getPropertyValue("height"));
+
+      var mouse = { x: 0, y: 0 };
+
+      canvas.addEventListener(
+        "mousemove",
+        function (e) {
+          mouse.x = e.pageX - this.offsetLeft;
+          mouse.y = e.pageY - this.offsetTop;
+        },
+        false
+      );
+
+      ctx.lineWidth = 20;
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      ctx.strokeStyle = "#00CC99";
+
+      canvas.addEventListener(
+        "mousedown",
+        function (e) {
+          ctx.beginPath();
+          ctx.moveTo(mouse.x, mouse.y);
+          canvas.addEventListener("mousemove", onPaint, false);
+        },
+        false
+      );
+      const predict = () => {
+        $.post("http://localhost:5000/", {
+          data: canvas.toDataURL("image/png"),
+        }).done(function (data) {
+          $("#number").html(data);
+        });
+      };
+      canvas.addEventListener(
+        "mouseup",
+        function () {
+          canvas.removeEventListener("mousemove", onPaint, false);
+        },
+        false
+      );
+
+      var onPaint = function () {
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+      };
+      //function to clear canvas
+      const clear = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      };
+    </script>
+  </body>
+</html>
