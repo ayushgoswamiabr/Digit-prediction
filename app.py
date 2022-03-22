@@ -1,9 +1,11 @@
 import joblib
 from flask import Flask, request, render_template
 import base64
-app = Flask(__name__)
 import cv2
 import numpy as np
+
+
+app = Flask(__name__)
 @app.route('/')
 def home():
     return render_template('index.html')
