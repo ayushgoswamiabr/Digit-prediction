@@ -14,16 +14,65 @@
       #predicted {
         font-size: 36px;
       }
+      .container {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        max-width: 50%;
+        margin: auto;
+      }
+      .btnflex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .btnflex button {
+        margin: 10px;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, 0.1) 0 6px 20px;
+        box-sizing: border-box;
+        color: #121212;
+        cursor: pointer;
+        display: inline-flex;
+        flex: 1 1 auto;
+        font-family: Inter, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        justify-content: center;
+        line-height: 1;
+        outline: none;
+        padding: 1rem 1.2rem;
+        text-align: center;
+        text-decoration: none;
+        transition: box-shadow 0.2s, -webkit-box-shadow 0.2s;
+        white-space: nowrap;
+        border: 0;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+      }
+
+      .btnflex button:hover {
+        box-shadow: #121212 0 0 0 3px, transparent 0 0 0 0;
+      }
     </style>
   </head>
   <body>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <div id="paint">
-      <canvas id="myCanvas"></canvas>
+    <div class="container">
+      <div id="paint">
+        <canvas id="myCanvas"></canvas>
+      </div>
+      <span id="predicted">Predicted number: <span id="number"></span></span>
+      <br />
+      <div class="btnflex">
+        <button onclick="{predict()}">Submit</button>
+        <button id="clear">clear</button>
+      </div>
     </div>
-    <button onclick="{predict()}">Submit</button>
-    <button onclick="{clear()}">clear</button>
-    <span id="predicted">Predicted number: <span id="number"></span></span>
     <script>
       var canvas = document.getElementById("myCanvas");
       var ctx = canvas.getContext("2d");
@@ -78,9 +127,10 @@
         ctx.stroke();
       };
       //function to clear canvas
-      const clear = () => {
+      var clearbtn = document.getElementById("clear");
+      clearbtn.addEventListener("click", function (e) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-      };
+      });
     </script>
   </body>
 </html>

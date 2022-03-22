@@ -1,4 +1,4 @@
-import pickle
+import joblib
 from flask import Flask, request, render_template
 import base64
 app = Flask(__name__)
@@ -21,7 +21,7 @@ def predict():
     # numpydata = asarray(img)
     # im = numpydata[:,:,0].reshape(1,784)
     # im = im_28.reshape(1, 784)
-    model = pickle.load(open('model_logistic_regression.pkl', 'rb'))
+    model = joblib.load(open('model_logistic_regression.pkl', 'rb'))
     pred = model.predict(processed)
     return str(pred[0])
 

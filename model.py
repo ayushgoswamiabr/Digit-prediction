@@ -1,8 +1,7 @@
-import numpy as np
-import pandas as pd
 import warnings
+import pandas as pd
 warnings.filterwarnings("ignore")
-import pickle
+import joblib
 from sklearn.datasets import fetch_openml
 mnist = fetch_openml('mnist_784')
 x = mnist['data']
@@ -14,6 +13,7 @@ x_test=x_test/255
 from sklearn.ensemble import RandomForestClassifier
 model = RandomForestClassifier()
 model.fit(x_train,y_train)
+joblib.dump(model,open('model_random_forest.pkl','wb'), compress=9)
 from sklearn.metrics import accuracy_score
 y_pred = model.predict(x_test)
 print("Accuracy of the model is {0}%".format(round(accuracy_score(y_test,y_pred)*100,2)))
