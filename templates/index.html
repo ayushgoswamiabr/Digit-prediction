@@ -108,7 +108,7 @@
         false
       );
       const predict = () => {
-        $.post("http://localhost:5000/", {
+        $.post("/", {
           data: canvas.toDataURL("image/png"),
         }).done(function (data) {
           $("#number").html(data);
