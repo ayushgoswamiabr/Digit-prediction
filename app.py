@@ -19,11 +19,12 @@ def predict():
     character = cv2.imdecode(img, 0)
     resized_character = cv2.resize(character, (28, 28)).astype('int')  
     processed = resized_character.reshape((1, 784))
+    processed = processed
     # img = Image.open('./static/image.png')
     # numpydata = asarray(img)
     # im = numpydata[:,:,0].reshape(1,784)
     # im = im_28.reshape(1, 784)
-    model = joblib.load(open('model_SVM.pkl', 'rb'))
+    model = joblib.load(open('model_random_forest.pkl', 'rb'))
     pred = model.predict(processed)
     return str(pred[0])
 
