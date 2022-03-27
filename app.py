@@ -23,7 +23,7 @@ def predict():
     # numpydata = asarray(img)
     # im = numpydata[:,:,0].reshape(1,784)
     # im = im_28.reshape(1, 784)
-    model = joblib.load(open('model_logistic_regression.pkl', 'rb'))
+    model = joblib.load(open('model_SVM.pkl', 'rb'))
     pred = model.predict(processed)
     return str(pred[0])
 
